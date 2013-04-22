@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     
     <uses-sdk
-        android:minSdkVersion="16"
+        android:minSdkVersion="8"
         android:targetSdkVersion="15" />
 
     <application

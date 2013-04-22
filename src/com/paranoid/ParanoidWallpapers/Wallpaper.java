@@ -166,7 +166,8 @@ public class Wallpaper extends FragmentActivity {
         }
     }
 
-    public class WallpaperFragment extends Fragment {
+    @SuppressLint("ValidFragment")
+	public class WallpaperFragment extends Fragment {
         public static final String ARG_SECTION_NUMBER = "section_number";
 
         @Override
