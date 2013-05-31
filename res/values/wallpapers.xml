@@ -18,6 +18,20 @@
         <item>wallpaper_6</item>
         <item>wallpaper_7</item>
         <item>wallpaper_8</item>
+        <item>wallpaper_beki1984_colorwave</item>
+        <item>wallpaper_prash_arrowd_blue</item>
+        <item>lookingglass_background</item>
+        <item>wallpaper_th_shadowchess</item>
+        <item>wallpaper_nebkat_bokeh</item>
+        <item>wallpaper_skate</item>
+        <item>wallpaper_prash_nexus_surf</item>
+        <item>wallpaper_eklipze_cheshireyellow</item>
+        <item>wallpaper_eklipze_notquitemono</item>
+        <item>wallpaper_eklipze_technicolorstripes</item>
+        <item>carbonfiber_background</item>
+        <item>pyramid_background</item>
+        <item>droid_background</item>
+        <item>dark_droid_background</item>
     </string-array>
 
     <string-array name="info" translatable="false">
@@ -30,5 +44,19 @@
         <item>Rocket Launcher</item>
         <item>Pet Sematary</item>
         <item>Fallen Cookies</item>
+        <item>Colorwave</item>
+        <item>Blue Lines</item>
+        <item>Looking Glass</item>
+        <item>Chess</item>
+        <item>Circles</item>
+        <item>Skating</item>
+        <item>Nexus Surfing</item>
+        <item>Cheshire</item>
+        <item>Not Quite Mono</item>
+        <item>Technicolor Stripes</item>
+        <item>Carbon Fiber</item>
+        <item>Pyramid</item>
+        <item>Droid Pyramid</item>
+        <item>Dark Droid Pyramid</item>
     </string-array>
 </resources>
