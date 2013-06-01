@@ -20,6 +20,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.Paint;
@@ -42,6 +44,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 @SuppressLint("ParserError")
@@ -110,12 +113,16 @@ public class Wallpaper extends FragmentActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new SimpleOnPageChangeListener(){
-            public void onPageSelected(int position) {
+            
+			public void onPageSelected(int position) {
                 mCurrentFragment = position;
 
                 // Check if item is customizable
                 mCustomizable = (mCurrentFragment == 0);
-                Wallpaper.this.invalidateOptionsMenu();
+                try {
+                	Method method = Wallpaper.class.getMethod("invalidateOptionsMenu", new Class[] {});
+                    method.invoke(Wallpaper.this);
+                } catch (Exception e) {}
             }
         });
         
@@ -178,7 +185,7 @@ public class Wallpaper extends FragmentActivity {
             Bundle args = getArguments();
             LinearLayout holder = new LinearLayout(mContext);
             holder.setLayoutParams(new LinearLayout.LayoutParams
-                    (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    (LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
             ImageView imageView = new ImageView(mContext);
             imageView.setLayoutParams(new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -303,26 +310,38 @@ public class Wallpaper extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private Bitmap getColoredBitmap(Bitmap src, int color){
+	private Bitmap getColoredBitmap(Bitmap src, int color){
         int width = src.getWidth();
         int height = src.getHeight();
 
         Bitmap dest = Bitmap.createBitmap(width, height,
                 Bitmap.Config.RGB_565);
-         
+        
         Canvas canvas = new Canvas(dest);
-        Paint paint = new Paint();
-        paint.setColorFilter(new PorterDuffColorFilter(color, Mode.OVERLAY)); 
-        canvas.drawBitmap(src, 0, 0, paint);
-         
+	    Paint paint = new Paint();
+	    
+        try  {
+	        Mode m = (Mode) Mode.class.getField("OVERLAY").get(null);
+	        paint.setColorFilter(new PorterDuffColorFilter(color, m));
+        } catch (Exception e) {
+        	paint = new Paint();
+        	ColorFilter filter = new LightingColorFilter(color, 1);
+        	paint.setColorFilter(filter);
+        }
+	    canvas.drawBitmap(src, 0, 0, paint);
+        
         return dest;
     }
 
-    @Override
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-         menu.add(Menu.NONE, MENU_APPLY, 0, R.string.action_apply)
-                 .setIcon(android.R.drawable.ic_menu_set_as)
-                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+         MenuItem item = menu.add(Menu.NONE, MENU_APPLY, 0, R.string.action_apply)
+                 .setIcon(android.R.drawable.ic_menu_set_as);
+    	 try {
+         	Method method = MenuItem.class.getMethod("setShowAsAction", new Class[] { int.class });
+         	int param = MenuItem.class.getField("SHOW_AS_ACTION_ALWAYS").getInt(null) | MenuItem.class.getField("SHOW_AS_ACTION_WITH_TEXT").getInt(null);
+            method.invoke(item, param);
+         } catch (Exception e) {}
          return super.onCreateOptionsMenu(menu);
     }
 }

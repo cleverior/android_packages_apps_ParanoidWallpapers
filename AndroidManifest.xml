@@ -8,13 +8,14 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.paranoid.ParanoidWallpapers">
+    package="com.paranoid.ParanoidWallpapers"
+    android:installLocation="auto" >
     
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     
     <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="16" />
+        android:minSdkVersion="7"
+        android:targetSdkVersion="17" />
 
     <application
         android:icon="@drawable/ic_launcher"
